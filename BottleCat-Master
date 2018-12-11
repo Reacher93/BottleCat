@@ -13,7 +13,7 @@ char test; //test Variable definiert
 
 void loop()
 {
-if (BT.aviable()) //BT abfrage
+if (BT.available()) //BT abfrage
 {
     test=BT.read(); //BT Wert wird in Variable eingelesen
 }
