@@ -23,7 +23,7 @@ void loop() {
 
     setE2();        //Funktion ausführen
     float val2;     //Definiere die Variable val2 als Datentyp float
-    val2 = EEPROM.get(add);     //Schreibt den Inhalt ab dem 2ten Byte des EEPROMs in die Variable
+    EEPROM.get(add, val2);     //Schreibt den Inhalt ab dem 2ten Byte des EEPROMs in die Variable
     Serial.println(val2);       //Gibt die ausgelesen Variable im Serial Monitor aus
 
     delay(1000);
