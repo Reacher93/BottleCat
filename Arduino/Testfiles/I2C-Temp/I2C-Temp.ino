@@ -27,5 +27,6 @@ void loop(){
 
     Serial.print("Die gemessene Temperatur ist: ");
     Serial.println(OT);
+    delay(500);
 
 }
