@@ -1,0 +1,11 @@
+Bluetoothmodul:
+Über die verschinenen Bluetoothmodule wird man im Internet gut aufgeklärt. Auf diversen Homepages kann man die Vor- und Nachteile der unterschidlichen Module nachlesen.
+
+Infos:
+https://www.adafruit.com/product/2746
+
+I2C:
+Bus-Protokoll für die Kommunikation mit dem Temp Sensor.
+
+Quelle: https://www.youtube.com/watch?v=6IAkYpmA1DQ
+
