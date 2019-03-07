@@ -1,15 +1,15 @@
-#include <SoftwareSerial.h>
+#include <BluetoothSerial.h>    //Benötigte Library für die Serielle Bluetooth Übertragung mit dem ESP32 Modul
 
-int rx = 7; // pin 7 als tx definiert
-int tx = 8; // pin 8 als rx definiert
+/*int tx = 7; // pin 7 als tx definiert
+int rx = 8; // pin 8 als rx definiert -> Für das ESP32 Modul nicht benötigt*/
 
-SoftwareSerial BT(rx, tx); //Serialschnitstelle BT definiert
+BluetoothSerial BT;   // für EPS32 nicht benötigt(tx, rx); //Serialschnitstelle BT definiert
 
 String var; //String var definiert
 
 void setup()
 {
-BT.begin(9600); //starte Serialschnitstelle mit der Baudrate 9600
+BT.begin("Bottle-Cat"); //starte Serialschnitstelle mit Bluetooth device name
 Serial.begin(4800);
 Serial.println("Monitor läuft");
 }
@@ -41,21 +41,3 @@ if (Serial.available())  //Wert aus Monitor abfragen
   }
   BT.print(Mvar);
 }
-
-/*
-void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length){
-
-  if(type == WStype_TEXT){
-
-    rx_from_brower = "";
-
-   for(int i = 0; i < length; i++){
-
-   // rx_from_brower = (rx_from_brower.concat((char) payload[i]));
-
-   rx_from_brower += (char)payload[i];
-
-    }
-
-    Serial.println(rx_from_brower);
-    */
