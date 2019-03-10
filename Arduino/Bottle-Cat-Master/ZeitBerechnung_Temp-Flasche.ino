@@ -2,7 +2,7 @@
 
 float ZK = 6000;    //Ermittelte Zeitkonstate für Sättigungsfunktion (Flaschenaufwärmung)
 float ZK2 = 5000;   //Ermittelte Zeitkonstate für Abklingfunktion (Flasche kühlen)
-float TB2 = 9;    //Definierte max. Flaschen Temperatur
+//float TB2 = 9;    //Definierte max. Flaschen Temperatur
 float TK = 3;   //Kühlschrank Temperatur
 float TB3 = 7;    //Soll Temperatur Flasche aus Kühlschrank
 
@@ -26,6 +26,7 @@ int ZeitBk(float TB1){
   return zeit;
 }
 
+/*
 void setup() {
   Serial.begin(9600);
  
@@ -53,3 +54,4 @@ void loop() {
   }
   delay(10000);
 }
+*/
