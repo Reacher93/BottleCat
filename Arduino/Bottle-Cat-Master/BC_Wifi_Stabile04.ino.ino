@@ -18,8 +18,8 @@ LiquidCrystal_I2C lcd(0x3F, lcdColumns, lcdRows);
 
 int amps1 = 0;
 int amps2 = 0;
-float pitchshifter = 0.8;
-float timeshifter = 0.8;
+float pitchshifter = 3;
+float timeshifter = 3;
 
 int sechzentel = 125;
 int achtel = 250;
@@ -74,16 +74,7 @@ void playsound() {
   
  delay(30);
   }
-    for (int i = 0; i < 18; i++)
-  {
-  Zaxis.setSpeed(waswollenwirtrinken[i].pitch * pitchshifter);
-  digitalWrite(5, LOW);
-  Zaxis.step(-waswollenwirtrinken[i].lenght * timeshifter);
- // Serial.println(analogRead(34));
-  digitalWrite(5, HIGH);
-  
-  // delay(5);
-  }
+    
 }
 
 /*

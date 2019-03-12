@@ -45,6 +45,7 @@ void setup() {
   pinMode(pin_motor, OUTPUT);
   pinMode(ref, INPUT);
 
+/*
   //Motor referenzieren
   lcd.clear();
   lcd.print("Achtung Referenzierfahrt in:   s");
@@ -56,66 +57,94 @@ void setup() {
     lcd.clear();
     lcd.print("Achtung Motor referenziert");
     refMotor();
+*/
 
-  
+  for(int i = 0; i <= 3; i++){
+  lcd_animation();
+  }
+
+  playsound();
 }
 
 void loop() {
+TB1 = readTempBtl();   //Temp. Flasche einlesen
+TR = readTempRoom();   //Temp. Raum einlesen
+TR += 11;              //Offset für Raum temp.
+lcd_loop();
 
   if(BTabfragen() == "StarteBC200"){
-    //Flaschen Temperatur messen
-    TB1 = readTemp();
-    lcd.clear();
-    lcd.print("Flasche hat");
-    lcd.setCursor(0, 1);
-    lcd.print(TB1);
-    lcd.setCursor(4, 1);
-    lcd.print("°C");
 
-    //Zeitberechnung aus Sättigungsfunktion und Abklingfunktion mit Anzeige auf LCD
     if(TB1 > TB2){
       int zeit2;
-      zeit2 = ZeitBk(TB1);
-      lcd.clear();
-      lcd.print("Bier ist zu warm!");
-      delay(5000);
-      lcd.clear();
-      lcd.print(zeit2 / 60);
-      lcd.setCursor(4, 0);
-      lcd.println(" min kühl stellen");
+      zeit2 = ZeitBk(TB1);    //Berechnung: Zeit zum kühlen 
+      lcd_cooling(zeit2);
       }
-    else if(Voraussetzung(TB1, TR) == 0){
-        lcd.clear();
-        lcd.print("Fehler, bitte wiederholen");
-      }
-      else{
+    else{
         int zeit;
-        zeit = ZeitBw(TB1, TR);
-        lcd.clear();
-        lcd.print("Achtung, Bier wird geöffnet");
-
-       //Bier öffnen folgt
-       int steps = 0;
-       steps = (280 - BtlHgh) * 50;   //280mm von der Grundplatte bis zum Öffnungspunkt, 50 Schritte/mm
-       Zaxis.setSpeed(200);
-       Zaxis.step(steps - 1000);
-       Zaxis.setSpeed(50);
-       Zaxis.step(1000);
-       delay(250);
-       Zaxis.setSpeed(200);
-       Zaxis.step(-steps - 1000);
-       Zaxis.setSpeed(200);
-       Zaxis.step(-1000);
-
-       lcd.clear();
-       lcd.print("Bitte innerhalb von ");
-       lcd.setCursor(1, 4);
-       lcd.print(zeit / 60);
-       lcd.setCursor(1, 8);
-       lcd.print("min trinken");
+        zeit = ZeitBw(TB1, TR);   //Berechung: Zeit zum trinken
+        lcd_drink(zeit);
+        delay(5000);
       }
-  }
+       //Bier öffnen folgt
+       Bier_open();
+       lcd.clear();     
+    }
+}
 
+void lcd_animation(){   //Augen der Katze anzeigen
+  lcd.clear();
+  lcd.print(" 00        00");
+  lcd.setCursor(0, 1);
+  lcd.print(" 00        00");
+  delay(1500);
+  lcd.clear();
+  lcd.print("   00        00");
+  lcd.setCursor(0, 1);
+  lcd.print("   00        00");
+  delay(1500);
+}
 
- 
+void lcd_loop(){    //Raum und Flaschen Temp. Anzeige
+  lcd.setCursor(0, 0);
+  lcd.print("Raum:    ");
+  lcd.print(TR);
+  lcd.print((char) 223);
+  lcd.print(" ");
+  lcd.setCursor(0, 1);
+  lcd.print("Flasche: ");
+  lcd.print(TB1);
+  lcd.print((char) 223);
+  lcd.print(" ");
+}
+
+void lcd_cooling(int zeit){    //Anzeige zu kühlstellende Zeit
+  lcd.clear();
+  lcd.print("Rat der Katze:");
+  lcd.setCursor(0, 1);
+  lcd.print(zeit);
+  lcd.print(" min k");
+  lcd.print("\365");
+  lcd.print("hlen");
+}
+
+void lcd_drink(int zeit){    //Anzeige Zeit zum trinken
+  lcd.clear();
+  lcd.print("Rat der Katze");
+  lcd.setCursor(0, 1);
+  lcd.print("Trinken in ");
+  lcd.print(zeit);
+  lcd.print(" min");
+}
+
+void Bier_open(){
+  int steps = 0;
+  steps = (284 - BtlHgh) * 50;   //284mm von der Grundplatte bis zum Öffnungspunkt, 50 Schritte/mm
+  Zaxis.setSpeed(300);
+  digitalWrite(5, LOW);
+  Zaxis.step(steps);
+  digitalWrite(5, HIGH);
+  delay(250);
+  digitalWrite(5, LOW);
+  Zaxis.step(-steps);
+  digitalWrite(5, HIGH);
 }

@@ -9,20 +9,15 @@ float TB3 = 7;    //Soll Temperatur Flasche aus Kühlschrank
 int ZeitBw(float TB1, float TR){   //Funktion zur Berechnung der Zeit (in sec.), bis die Flasche die max. Temperatur erreicht
   int zeit;
   zeit = log(TR/(TB1-TB2+TR))*ZK;
+  zeit = zeit / 60;   //Umrechnung in min
   return zeit;
 }
 
-bool Voraussetzung(float TB1, float TR){    //Voraussetzung für Berechnung
-  int ok = 0;
-  if(TR>0 && TB1-TB2+TR>0){   //Mathematische Voraussetzung
-  ok = 1;
-  }
-  return ok;
-}
 
 int ZeitBk(float TB1){
   int zeit;
   zeit = log(TB1/(TB3-TK))*ZK2;
+  zeit = zeit / 60;   //Umrechnung in min
   return zeit;
 }
 
