@@ -1,14 +1,14 @@
+//Gehört zum Master Sketch; Bottle-Cat
 
 #include <Stepper.h>
 
 #define myTypes_h
-#define Pin_Mctrl 5 // Definition motor-disable pin
 
 // Definition der Notenlänge
 #define timeshifter 3 //Multiplikator der Tonlänge
 #define achtel  250
 #define viertel  500
-#define notenzahl = 18
+#define notenzahl 18
 
 // Definition der Tonhöhe
 #define pitchshifter 3 // Multiplikator der Tonhöhe
