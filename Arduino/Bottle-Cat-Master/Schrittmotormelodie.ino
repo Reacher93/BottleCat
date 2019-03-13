@@ -1,31 +1,17 @@
 
 #include <Stepper.h>
-// #ifndef myTypes_h
 #define myTypes_h
-//#include <WString.h>
 
-/*
-//LCD init
-int lcdColumns = 16;
-int lcdRows = 2;
-LiquidCrystal_I2C lcd(0x3F, lcdColumns, lcdRows); 
-*/
+#define Pin_Mctrl 5
 
- int bottletemp;
- //int testvar;
- //int pulse = 0;
+// Definition der Notenlänge
+float timeshifter = 3; //Multiplikator der Tonlänge
+#define achtel  250
+#define viertel  500
+#define notenzahl = 18
 
-
-int amps1 = 0;
-int amps2 = 0;
-float pitchshifter = 3;
-float timeshifter = 3;
-
-int sechzentel = 125;
-int achtel = 250;
-int viertel = 500;
-// int notenzahl = 18;
-
+// Definition der Tonhöhe
+float pitchshifter = 3; // Multiplikator der Tonhöhe
 #define Tone_C5 523.251
 #define Tone_A4 440.000
 #define Tone_B4 466.164
@@ -38,6 +24,7 @@ int viertel = 500;
 #define Tone_B3 246.942
 #define Tone_G3 195.998
 
+// In diesem Struct sind die Informationen der Melodie enthalten
 typedef struct song_wwwt
 {
   int pitch;
@@ -50,41 +37,15 @@ song_wwwt waswollenwirtrinken[] = {
 { Tone_B3, achtel }, { Tone_G3, achtel }, { Tone_A3, viertel }
 };
 
-Stepper Zaxis(200, 25, 18, 23, 33); // Steps / u, Pinout
-
-void refMotor(){    //Motor referenzieren
-  Zaxis.setSpeed(80);    //Speed reduziert, da Referenzfahrt Stromüberwacht stoppt
-  while(ref == LOW){
-    Zaxis.step(-1000);    //5400 Stepps -> 27 Umdrehungen -> 111mm Verfahrweg
-  }
-}
-  
-  
-void playsound() {
-    
- //Serial.println(sizeof(song_wwwt) + 10);
-  //delay(3000);
-  for (int i = 0; i < 18; i++)
+// Funktion, um die Melodie vom Struct abzuspielen
+void playsound() 
+{
+  for (int i = 0; i < notenzahl; i++)
   {
   Zaxis.setSpeed(waswollenwirtrinken[i].pitch * pitchshifter);
-  digitalWrite(5, LOW);
+  digitalWrite(Pin_Mctrl, LOW);
   Zaxis.step(waswollenwirtrinken[i].lenght * timeshifter);
- // Serial.println(analogRead(34));
-  digitalWrite(5, HIGH);
-  
- delay(30);
-  }
-    
+  digitalWrite(Pin_Mctrl, HIGH);
+  delay(30);
+  }  
 }
-
-/*
-void setup()
-{
-
-}
-
-void loop()
-{
- 
-}
-*/
