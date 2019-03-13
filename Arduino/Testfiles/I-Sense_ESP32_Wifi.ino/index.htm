@@ -1,0 +1,113 @@
+char webpage[] PROGMEM = R"=====(
+<!DOCTYPE html>
+<html>
+<head>
+    <style type="text/css">
+   
+  .text { 
+    
+    font-size: 18px;
+    color:red;
+    } 
+  p {
+  box-sizing: border-box;
+  width: 60%
+  border-width: 10px;
+  border-color: black;
+  border-style: solid;
+  float: center;
+  }
+  body {
+    background-color: #F8F8F8;
+    padding: 10px 0px 10px 10px;
+    margin: 0px;
+    }
+  
+  
+  </style>
+<title>Bottle Cat I-Sense Easteregg</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <script>
+
+    var Socket;
+    function init() 
+     {
+      Socket = new WebSocket('ws://' + window.location.hostname + ':81/');
+      Socket.onmessage = function(event)
+       {
+       if (event.data == "e")
+        { 
+        document.getElementById("wedeln").disabled = false; 
+        }
+       else if (event.data == "d")
+        { 
+        document.getElementById("wedeln").disabled = true; 
+        }
+       else 
+        {
+       var str = event.data;
+       var tagsArray = str.split(",");
+       document.getElementById("timeon").value = tagsArray[0];   
+       document.getElementById("islider1").value = parseInt(tagsArray[1]); 
+       document.getElementById("islider2").value = parseInt(tagsArray[2]); 
+       document.getElementById("imax1").value = tagsArray[3];
+       document.getElementById("imax2").value = tagsArray[4];              
+        } 
+
+     }
+     }
+ 
+     function torqueon(){
+      Socket.send("torqueon");
+    } 
+           
+   function torqueoff(){
+      Socket.send("torqueoff");
+    } 
+
+     function wedeln(){
+      Socket.send("wedeln")      
+    }   
+  </script>
+
+</head>
+<body onload="javascript:init()">
+<p> <span class="text">BottleCat Current Monitor</span></br> 
+</br>
+
+<div>
+Zeit Online: <output type="text" id="timeon"/>
+</div>
+</br>
+</br>
+<div>
+0mA<input id="islider1" type="range" min="1" max="4095"/>1500mA 
+</div>
+</br>
+ <div>
+I-Max CH1: <output type="text" id="imax1"/>
+  </div>
+ </br>
+<div>
+0mA<input id="islider2" type="range" min="1" max="4095"/>1500mA 
+</div>
+</br>
+ <div>
+I-Max CH2: <output type="text" id="imax2"/>
+</div>
+</br>
+</br>
+<hr/>
+    <div>
+ <center>  <button id="wedeln" onclick="wedeln()" style="height: 100px; width: 200px;">Wedeln</button></center>
+  </div>
+      <div>
+  <center> <button id="torqueoff" onclick="torqueoff()" style="height: 100px; width: 200px;">Motor Torque Off</button></center>
+  </div>
+        <div>
+  <center> <button id="torqueon" onclick="torqueon()" style="height: 100px; width: 200px;">Motor torque On</button></center>
+  </div>
+       </p>
+</body>
+</html>
+)=====";
