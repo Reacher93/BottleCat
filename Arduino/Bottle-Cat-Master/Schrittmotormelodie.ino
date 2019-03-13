@@ -1,17 +1,17 @@
 
 #include <Stepper.h>
-#define myTypes_h
 
-#define Pin_Mctrl 5
+#define myTypes_h
+#define Pin_Mctrl 5 // Definition motor-disable pin
 
 // Definition der Notenlänge
-float timeshifter = 3; //Multiplikator der Tonlänge
+#define timeshifter 3 //Multiplikator der Tonlänge
 #define achtel  250
 #define viertel  500
 #define notenzahl = 18
 
 // Definition der Tonhöhe
-float pitchshifter = 3; // Multiplikator der Tonhöhe
+#define pitchshifter 3 // Multiplikator der Tonhöhe
 #define Tone_C5 523.251
 #define Tone_A4 440.000
 #define Tone_B4 466.164
