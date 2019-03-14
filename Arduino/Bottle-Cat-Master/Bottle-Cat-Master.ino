@@ -22,7 +22,7 @@
 //Alle Globalen Variablen
 float TB1 = 8;      //Deviniere Gemessene Flaschen Temp.
 float TR = 22.5;    //Deviniere Gemessene Raump Temp.
-float TB2 = 10;     //Definierte max. Flaschen Temperatur
+float TB2 = 12;     //Definierte max. Flaschen Temperatur
 int BtlHgh = 200;   //Flaschen Höhe in mm
 
 Stepper Zaxis(200, 25, 18, 23, 33); // Steps / u, Pinout
@@ -48,7 +48,8 @@ void setup() {
 void loop() {
 TB1 = readTempBtl();   //Temp. Flasche einlesen
 TR = readTempRoom();   //Temp. Raum einlesen
-TR += 11;              //Offset für Raum temp. da die Board temp. Abweichungen hat
+TR += 12;              //Offset für Raum temp. da die Board temp. Abweichungen hat
+TB1 -= 2;              //Offset für Flaschen temp. da die Board temp. Abweichungen hat
 
 lcd_loop();
 
